@@ -1,6 +1,7 @@
 #include "torrentdetailsoverviewpanel.hpp"
 
 #include <fmt/format.h>
+#include <fmt/xchar.h>
 #include <wx/clipbrd.h>
 #include <wx/dcbuffer.h>
 #include <wx/sizer.h>
@@ -10,6 +11,7 @@
 #include "../bittorrent/torrenthandle.hpp"
 #include "../bittorrent/torrentstatus.hpp"
 #include "../core/utils.hpp"
+#include "../core/configuration.hpp"
 #include "translator.hpp"
 #include "widgets/pieceprogressbar.hpp"
 
@@ -83,10 +85,11 @@ public:
     }
 };
 
-TorrentDetailsOverviewPanel::TorrentDetailsOverviewPanel(wxWindow* parent, wxWindowID id, int cols, bool showPieceProgress)
+TorrentDetailsOverviewPanel::TorrentDetailsOverviewPanel(wxWindow* parent, wxWindowID id, bool isDarkMode, int cols, bool showPieceProgress)
     : wxScrolledWindow(parent, id),
     m_pieceProgress(nullptr),
     m_name(new CopyableStaticText(this)),
+    m_isDarkMode(isDarkMode),
     m_infoHash(new CopyableStaticText(this)),
     m_savePath(new CopyableStaticText(this)),
     m_pieces(new CopyableStaticText(this)),
@@ -140,7 +143,7 @@ TorrentDetailsOverviewPanel::TorrentDetailsOverviewPanel(wxWindow* parent, wxWin
 
     if (showPieceProgress)
     {
-        m_pieceProgress = new Widgets::PieceProgressBar(this, wxID_ANY);
+        m_pieceProgress = new Widgets::PieceProgressBar(this, wxID_ANY, m_isDarkMode);
         m_mainSizer->Add(m_pieceProgress, 0, wxEXPAND | wxTOP | wxRIGHT | wxLEFT, FromDIP(5));
     }
     
@@ -246,7 +249,7 @@ void TorrentDetailsOverviewPanel::UpdateView(int cols, bool showPieceProgress)
 {
     if (showPieceProgress && m_pieceProgress == nullptr)
     {
-        m_pieceProgress = new Widgets::PieceProgressBar(this, wxID_ANY);
+        m_pieceProgress = new Widgets::PieceProgressBar(this, wxID_ANY, m_isDarkMode);
         m_mainSizer->Insert(0, m_pieceProgress, 0, wxEXPAND | wxTOP | wxRIGHT | wxLEFT, FromDIP(5));
     }
     else if (!showPieceProgress && m_pieceProgress != nullptr)
