@@ -1,4 +1,4 @@
-#addin "nuget:?package=Cake.CMake&version=1.3.1"
+#addin "nuget:?package=Cake.CMake&version=1.4.0"
 #tool  "nuget:?package=GitVersion.CommandLine&version=5.12.0"
 #tool  "nuget:?package=WiX&version=3.11.2"
 

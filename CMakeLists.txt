@@ -1,6 +1,5 @@
-cmake_minimum_required(VERSION 3.14 FATAL_ERROR)
+cmake_minimum_required(VERSION 3.30.2 FATAL_ERROR)
 cmake_policy(SET CMP0092 NEW) # don't add /W3 as default
-cmake_policy(SET CMP0115 OLD) # Source file extensions must be explicit.
 
 # set(VCPKG_OVERLAY_PORTS    ${CMAKE_CURRENT_SOURCE_DIR}/vendor/vcpkg-overlays/ports)
 set(VCPKG_OVERLAY_TRIPLETS ${CMAKE_CURRENT_SOURCE_DIR}/vendor/vcpkg-overlays/triplets)
@@ -8,7 +7,7 @@ set(CMAKE_TOOLCHAIN_FILE   ${CMAKE_CURRENT_SOURCE_DIR}/vendor/vcpkg/scripts/buil
 
 project("PicoTorrent")
 
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 26)
 
 # --------- antlr4 options
 option(WITH_STATIC_CRT "" Off)
@@ -16,7 +15,7 @@ option(WITH_STATIC_CRT "" Off)
 
 # --------- wx options
 set(wxBUILD_SHARED        OFF   CACHE BOOL   "" FORCE)
-set(wxBUILD_COMPATIBILITY "3.2" CACHE STRING "" FORCE)
+set(wxBUILD_COMPATIBILITY "3.3" CACHE STRING "" FORCE)
 set(wxUSE_EXCEPTIONS      OFF   CACHE BOOL   "" FORCE)
 # --------------------
 
@@ -47,7 +46,7 @@ set(CMAKE_SHARED_LINKER_FLAGS_RELEASE "/DEBUG /INCREMENTAL:NO /MAP /OPT:REF /OPT
 
 add_executable(
     PicoTorrent-coredb
-    src/l10n/main
+    src/l10n/main.cpp
     lang/ca-ES.json
     lang/de-DE.json
     lang/el-GR.json
@@ -85,81 +84,81 @@ add_executable(
     PicoTorrent
     WIN32
 
-    src/picotorrent/application
-    src/picotorrent/buildinfo
-    src/picotorrent/crashpadinitializer
-    src/picotorrent/main
-    src/picotorrent/persistencemanager
+    src/picotorrent/application.cpp
+    src/picotorrent/buildinfo.cpp
+    src/picotorrent/crashpadinitializer.cpp
+    src/picotorrent/main.cpp
+    src/picotorrent/persistencemanager.cpp
     src/picotorrent/resources.rc
 
     # API
-    src/picotorrent/api/libpico
+    src/picotorrent/api/libpico.cpp
 
     # BitTorrent
-    src/picotorrent/bittorrent/session
-    src/picotorrent/bittorrent/torrenthandle
+    src/picotorrent/bittorrent/session.cpp
+    src/picotorrent/bittorrent/torrenthandle.cpp
 
     # Core
-    src/picotorrent/core/configuration
-    src/picotorrent/core/database
-    src/picotorrent/core/environment
-    src/picotorrent/core/utils
+    src/picotorrent/core/configuration.cpp
+    src/picotorrent/core/database.cpp
+    src/picotorrent/core/environment.cpp
+    src/picotorrent/core/utils.cpp
 
     # Http
-    src/picotorrent/http/httpclient
+    src/picotorrent/http/httpclient.cpp
 
     # IPC
-    src/picotorrent/ipc/applicationoptionsconnection
-    src/picotorrent/ipc/server
+    src/picotorrent/ipc/applicationoptionsconnection.cpp
+    src/picotorrent/ipc/server.cpp
 
     # Dialogs
-    src/picotorrent/ui/dialogs/aboutdialog
-    src/picotorrent/ui/dialogs/addmagnetlinkdialog
-    src/picotorrent/ui/dialogs/addtrackerdialog
-    src/picotorrent/ui/dialogs/addtorrentdialog
-    src/picotorrent/ui/dialogs/createtorrentdialog
-    src/picotorrent/ui/dialogs/listeninterfacedialog
-    src/picotorrent/ui/dialogs/preferencesadvancedpage
-    src/picotorrent/ui/dialogs/preferencesconnectionpage
-    src/picotorrent/ui/dialogs/preferencesdialog
-    src/picotorrent/ui/dialogs/preferencesdownloadspage
-    src/picotorrent/ui/dialogs/preferencesgeneralpage
-    src/picotorrent/ui/dialogs/preferenceslabelspage
-    src/picotorrent/ui/dialogs/preferencesproxypage
-    src/picotorrent/ui/dialogs/textoutputdialog
+    src/picotorrent/ui/dialogs/aboutdialog.cpp
+    src/picotorrent/ui/dialogs/addmagnetlinkdialog.cpp
+    src/picotorrent/ui/dialogs/addtrackerdialog.cpp
+    src/picotorrent/ui/dialogs/addtorrentdialog.cpp
+    src/picotorrent/ui/dialogs/createtorrentdialog.cpp
+    src/picotorrent/ui/dialogs/listeninterfacedialog.cpp
+    src/picotorrent/ui/dialogs/preferencesadvancedpage.cpp
+    src/picotorrent/ui/dialogs/preferencesconnectionpage.cpp
+    src/picotorrent/ui/dialogs/preferencesdialog.cpp
+    src/picotorrent/ui/dialogs/preferencesdownloadspage.cpp
+    src/picotorrent/ui/dialogs/preferencesgeneralpage.cpp
+    src/picotorrent/ui/dialogs/preferenceslabelspage.cpp
+    src/picotorrent/ui/dialogs/preferencesproxypage.cpp
+    src/picotorrent/ui/dialogs/textoutputdialog.cpp
 
     # Filters
-    src/picotorrent/ui/filters/pqltorrentfilter
+    src/picotorrent/ui/filters/pqltorrentfilter.cpp
 
     # Models
-    src/picotorrent/ui/models/filestoragemodel
-    src/picotorrent/ui/models/peerlistmodel
-    src/picotorrent/ui/models/torrentlistmodel
-    src/picotorrent/ui/models/trackerlistmodel
+    src/picotorrent/ui/models/filestoragemodel.cpp
+    src/picotorrent/ui/models/peerlistmodel.cpp
+    src/picotorrent/ui/models/torrentlistmodel.cpp
+    src/picotorrent/ui/models/trackerlistmodel.cpp
 
     # Persistence
-    src/picotorrent/ui/persistence/persistenttorrentlistview
+    src/picotorrent/ui/persistence/persistenttorrentlistview.cpp
 
     # UI
-    src/picotorrent/ui/console
-    src/picotorrent/ui/mainframe
-    src/picotorrent/ui/statusbar
-    src/picotorrent/ui/taskbaricon
-    src/picotorrent/ui/torrentcontextmenu
-    src/picotorrent/ui/torrentdetailsfilespanel
-    src/picotorrent/ui/torrentdetailsoverviewpanel
-    src/picotorrent/ui/torrentdetailspeerspanel
-    src/picotorrent/ui/torrentdetailstrackerspanel
-    src/picotorrent/ui/torrentdetailsview
-    src/picotorrent/ui/torrentfilelistview
-    src/picotorrent/ui/torrentlistview
-    src/picotorrent/ui/translator
+    src/picotorrent/ui/console.cpp
+    src/picotorrent/ui/mainframe.cpp
+    src/picotorrent/ui/statusbar.cpp
+    src/picotorrent/ui/taskbaricon.cpp
+    src/picotorrent/ui/torrentcontextmenu.cpp
+    src/picotorrent/ui/torrentdetailsfilespanel.cpp
+    src/picotorrent/ui/torrentdetailsoverviewpanel.cpp
+    src/picotorrent/ui/torrentdetailspeerspanel.cpp
+    src/picotorrent/ui/torrentdetailstrackerspanel.cpp
+    src/picotorrent/ui/torrentdetailsview.cpp
+    src/picotorrent/ui/torrentfilelistview.cpp
+    src/picotorrent/ui/torrentlistview.cpp
+    src/picotorrent/ui/translator.cpp
 
     # Widgets
-    src/picotorrent/ui/widgets/pieceprogressbar
+    src/picotorrent/ui/widgets/pieceprogressbar.cpp
 
     # Win32 specific stuff
-    src/picotorrent/ui/win32/openfiledialog
+    src/picotorrent/ui/win32/openfiledialog.cpp
 )
 
 target_compile_definitions(
@@ -241,7 +240,7 @@ set_property(TARGET PicoTorrent PROPERTY ENABLE_EXPORTS 1)
 add_library(
     Plugin_Updater
     SHARED
-    src/plugins/updater/updater
+    src/plugins/updater/updater.cpp
 )
 
 target_compile_definitions(Plugin_Updater PRIVATE -D_WIN32 -DUNICODE -DWIN32_LEAN_AND_MEAN)
