@@ -107,7 +107,7 @@ bool Compare(TLeft const& lhs, TRight const& rhs, Operator oper)
 class FilterVisitor : public pt::PQL::QueryBaseVisitor
 {
 public:
-    virtual antlrcpp::Any visitAndExpression(pt::PQL::QueryParser::AndExpressionContext* ctx) override
+    virtual std::any visitAndExpression(pt::PQL::QueryParser::AndExpressionContext* ctx) override
     {
         std::vector<FilterFunc> funcs;
 
@@ -128,12 +128,12 @@ public:
             });
     }
 
-    virtual antlrcpp::Any visitFilter(pt::PQL::QueryParser::FilterContext* ctx) override
+    virtual std::any visitFilter(pt::PQL::QueryParser::FilterContext* ctx) override
     {
         return this->visit(ctx->expression());
     }
 
-    virtual antlrcpp::Any visitOrExpression(pt::PQL::QueryParser::OrExpressionContext* ctx) override
+    virtual std::any visitOrExpression(pt::PQL::QueryParser::OrExpressionContext* ctx) override
     {
         std::vector<FilterFunc> funcs;
 
@@ -154,7 +154,7 @@ public:
             });
     }
 
-    virtual antlrcpp::Any visitOper(pt::PQL::QueryParser::OperContext* ctx) override
+    virtual std::any visitOper(pt::PQL::QueryParser::OperContext* ctx) override
     {
         if (ctx->CONTAINS()) return Operator::CONTAINS;
         if (ctx->EQ()) return Operator::EQ;
@@ -169,7 +169,7 @@ public:
             ctx->getStart()->getCharPositionInLine());
     }
 
-    virtual antlrcpp::Any visitOperatorPredicate(pt::PQL::QueryParser::OperatorPredicateContext* ctx) override
+    virtual std::any visitOperatorPredicate(pt::PQL::QueryParser::OperatorPredicateContext* ctx) override
     {
         std::string ref = this->visit(ctx->reference());
         Operator oper = this->visit(ctx->oper());
@@ -315,17 +315,17 @@ public:
             ctx->getStart()->getCharPositionInLine());
     }
 
-    virtual antlrcpp::Any visitPredicateExpression(pt::PQL::QueryParser::PredicateExpressionContext* ctx) override
+    virtual std::any visitPredicateExpression(pt::PQL::QueryParser::PredicateExpressionContext* ctx) override
     {
         return this->visit(ctx->predicate());
     }
 
-    virtual antlrcpp::Any visitReference(pt::PQL::QueryParser::ReferenceContext* ctx) override
+    virtual std::any visitReference(pt::PQL::QueryParser::ReferenceContext* ctx) override
     {
         return ctx->getText();
     }
 
-    virtual antlrcpp::Any visitValue(pt::PQL::QueryParser::ValueContext* ctx) override
+    virtual std::any visitValue(pt::PQL::QueryParser::ValueContext* ctx) override
     {
         Value val;
 
