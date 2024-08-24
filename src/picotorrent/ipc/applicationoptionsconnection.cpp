@@ -19,7 +19,7 @@ ApplicationOptionsConnection::ApplicationOptionsConnection(pt::UI::MainFrame* fr
 
 bool ApplicationOptionsConnection::OnExecute(const wxString&, const void *data, size_t size, wxIPCFormat format)
 {
-    std::string textData = GetTextFromData(data, size, format);
+    std::string textData = std::string(GetTextFromData(data, size, format));
 
     m_frame->GetEventHandler()->CallAfter([this, textData]()
         {

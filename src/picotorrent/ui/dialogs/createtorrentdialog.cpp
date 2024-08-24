@@ -143,7 +143,7 @@ CreateTorrentDialog::CreateTorrentDialog(wxWindow* parent, wxWindowID id, std::s
 
     // Progress, in the bottom
     auto progressSizer = new wxBoxSizer(wxVERTICAL);
-    m_status = new wxTextCtrl(this, wxID_ANY, fmt::format(i18n("status_s"), i18n("status_select_file_or_directory")), wxDefaultPosition, wxDefaultSize, wxTE_READONLY | wxBORDER_NONE);
+    m_status = new wxTextCtrl(this, wxID_ANY, fmt::format(fmt::runtime(i18n("status_s")), i18n("status_select_file_or_directory")), wxDefaultPosition, wxDefaultSize, wxTE_READONLY | wxBORDER_NONE);
     m_progress = new wxGauge(this, wxID_ANY, 0);
     m_progress->SetRange(100);
     progressSizer->Add(m_status, 0, wxEXPAND);
@@ -179,7 +179,7 @@ CreateTorrentDialog::CreateTorrentDialog(wxWindow* parent, wxWindowID id, std::s
     this->Bind(ptEVT_CREATE_TORRENT_THREAD_START,
         [this](wxThreadEvent&)
         {
-            m_status->SetLabel(fmt::format(i18n("status_s"), i18n("status_adding_files")));
+            m_status->SetLabel(fmt::format(fmt::runtime(i18n("status_s")), i18n("status_adding_files")));
             this->SetEnabledState(false);
         });
 
@@ -192,7 +192,7 @@ CreateTorrentDialog::CreateTorrentDialog(wxWindow* parent, wxWindowID id, std::s
             std::string err = evt.GetPayload<std::string>();
             wxMessageBox(err, "PicoTorrent", wxICON_ERROR, this);
 
-            m_status->SetLabel(fmt::format(i18n("status_s"), Utils::toStdWString(err)));
+            m_status->SetLabel(fmt::format(fmt::runtime(i18n("status_s")), Utils::toStdWString(err)));
         });
 
     this->Bind(ptEVT_CREATE_TORRENT_THREAD_STOP,
@@ -201,7 +201,7 @@ CreateTorrentDialog::CreateTorrentDialog(wxWindow* parent, wxWindowID id, std::s
             this->SetCursor(wxCURSOR_DEFAULT);
             this->SetEnabledState(true);
 
-            m_status->SetLabel(fmt::format(i18n("status_s"), i18n("status_saving_torrent")));
+            m_status->SetLabel(fmt::format(fmt::runtime(i18n("status_s")), i18n("status_saving_torrent")));
 
             wxFileDialog save(
                 this,
@@ -213,7 +213,7 @@ CreateTorrentDialog::CreateTorrentDialog(wxWindow* parent, wxWindowID id, std::s
 
             if (save.ShowModal() != wxID_OK)
             {
-                m_status->SetLabel(fmt::format(i18n("status_s"), i18n("status_ready")));
+                m_status->SetLabel(fmt::format(fmt::runtime(i18n("status_s")), i18n("status_ready")));
                 return;
             }
 
@@ -240,9 +240,9 @@ CreateTorrentDialog::CreateTorrentDialog(wxWindow* parent, wxWindowID id, std::s
             auto pp = evt.GetPayload<ProgressPayload>();
             m_status->SetLabel(
                 fmt::format(
-                    i18n("status_s"),
+                    fmt::runtime(i18n("status_s")),
                     fmt::format(
-                        i18n("status_hashing_piece"), pp.currentPiece + 1, pp.totalPieces)));
+                        fmt::runtime(i18n("status_hashing_piece")), pp.currentPiece + 1, pp.totalPieces)));
 
             float progress = 0;
 
@@ -423,13 +423,13 @@ void CreateTorrentDialog::UpdateState()
     if (m_path->GetValue().IsEmpty())
     {
         m_status->SetLabel(
-            fmt::format(i18n("status_s"), i18n("status_select_file_or_directory")));
+            fmt::format(fmt::runtime(i18n("status_s")), i18n("status_select_file_or_directory")));
         m_create->Disable();
     }
     else
     {
         m_status->SetLabel(
-            fmt::format(i18n("status_s"), i18n("status_ready")));
+            fmt::format(fmt::runtime(i18n("status_s")), i18n("status_ready")));
         m_create->Enable();
     }
 }

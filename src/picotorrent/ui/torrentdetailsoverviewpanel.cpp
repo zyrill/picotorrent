@@ -37,18 +37,18 @@ std::wstring SecondsToFriendly(std::chrono::seconds secs)
         if (min_left.count() <= 0)
         {
             return fmt::format(
-                i18n("eta_s_format"),
+                fmt::runtime(i18n("eta_s_format")),
                 sec_left.count());
         }
 
         return fmt::format(
-            i18n("eta_ms_format"),
+            fmt::runtime(i18n("eta_ms_format")),
             min_left.count(),
             sec_left.count());
     }
 
     return fmt::format(
-        i18n("eta_hms_format"),
+        fmt::runtime(i18n("eta_hms_format")),
         hours_left.count(),
         min_left.count(),
         sec_left.count());
@@ -168,7 +168,7 @@ void TorrentDetailsOverviewPanel::Refresh(pt::BitTorrent::TorrentHandle* torrent
     m_infoHash->SetLabel(status.infoHash);
     m_pieces->SetLabel(
         fmt::format(
-            i18n("d_of_d"),
+            fmt::runtime(i18n("d_of_d")),
             status.pieces.count(),
             status.pieces.size()));
     m_ratio->SetLabel(
@@ -210,7 +210,7 @@ void TorrentDetailsOverviewPanel::Refresh(pt::BitTorrent::TorrentHandle* torrent
         {
             m_size->SetLabel(
                 fmt::format(
-                    i18n("d_of_d"),
+                    fmt::runtime(i18n("d_of_d")),
                     Utils::toHumanFileSize(status.totalWanted),
                     Utils::toHumanFileSize(tf->total_size())));
         }

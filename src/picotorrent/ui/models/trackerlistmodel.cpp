@@ -192,7 +192,7 @@ void TrackerListModel::Update(pt::BitTorrent::TorrentHandle* torrent)
         if (tierIter == m_items.end())
         {
             auto newTier = std::make_shared<ListItem>();
-            newTier->key = Utils::toStdString(fmt::format(i18n("tier_n"), iter->tier));
+            newTier->key = Utils::toStdString(fmt::format(fmt::runtime(i18n("tier_n")), iter->tier));
             newTier->tier = iter->tier;
 
             m_items.push_back(newTier);
@@ -261,7 +261,7 @@ void TrackerListModel::Update(pt::BitTorrent::TorrentHandle* torrent)
             else if (ah.last_error)
             {
                 std::wstring error = fmt::format(
-                    i18n("error_s"),
+                    fmt::runtime(i18n("error_s")),
                     ah.message.empty()
                         ? Utils::toStdWString(ah.last_error.message())
                         : fmt::format(
@@ -389,7 +389,7 @@ void TrackerListModel::GetValue(wxVariant& variant, const wxDataViewItem& item, 
         }
 
         variant = fmt::format(
-            i18n("d_of_d"),
+            fmt::runtime(i18n("d_of_d")),
             li->fails,
             li->failLimit);
 
@@ -418,16 +418,16 @@ void TrackerListModel::GetValue(wxVariant& variant, const wxDataViewItem& item, 
         {
             if (min_left.count() <= 0)
             {
-                variant = fmt::format(i18n("eta_s_format"), sec_left.count());
+                variant = fmt::format(fmt::runtime(i18n("eta_s_format")), sec_left.count());
                 break;
             }
 
-            variant = fmt::format(i18n("eta_ms_format"), min_left.count(), sec_left.count());
+            variant = fmt::format(fmt::runtime(i18n("eta_ms_format")), min_left.count(), sec_left.count());
             break;
         }
 
         variant = fmt::format(
-            i18n("eta_hms_format"),
+            fmt::runtime(i18n("eta_hms_format")),
             hours_left.count(),
             min_left.count(),
             sec_left.count());

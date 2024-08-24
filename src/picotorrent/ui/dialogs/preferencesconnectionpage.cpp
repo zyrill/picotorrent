@@ -165,7 +165,7 @@ PreferencesConnectionPage::PreferencesConnectionPage(wxWindow* parent, std::shar
             long sel = m_listenInterfaces->GetFirstSelected();
             if (sel < 0) { return; }
 
-            std::string address = m_listenInterfaces->GetItemText(sel);
+            std::string address = std::string(m_listenInterfaces->GetItemText(sel));
             int port = std::atoi(m_listenInterfaces->GetItemText(sel, 1).c_str());
 
             ListenInterfaceDialog dlg(this, wxID_ANY, address, port);

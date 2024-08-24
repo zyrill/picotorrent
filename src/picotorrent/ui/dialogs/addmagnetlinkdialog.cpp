@@ -77,7 +77,7 @@ std::vector<libtorrent::add_torrent_params> AddMagnetLinkDialog::GetParams()
 
     while (tokenizer.HasMoreTokens())
     {
-        std::string token = tokenizer.GetNextToken();
+        std::string token = std::string(tokenizer.GetNextToken());
         if (!IsMagnetLinkOrInfoHash(token)) { continue; }
 
         switch (token.size())
