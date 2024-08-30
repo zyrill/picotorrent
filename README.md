@@ -44,9 +44,9 @@ applications installed,
  * [.NET Core](https://dotnet.microsoft.com/download). Used for the build scripts.
 
 ```
-λ git submodule update --init --recursive
-λ dotnet tool restore
-λ dotnet cake --platorm=[x86|x64] --configuration=[Debug|Release]
+# git submodule update --init --recursive
+# dotnet tool restore
+# dotnet cake --platform=[x86|x64] --configuration=[Debug|Release]
 ```
 
 
